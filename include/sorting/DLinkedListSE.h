@@ -39,9 +39,9 @@ public:
         int n = this->count;
         for (int step = 1; step < n; step *= 2)
         {
-            T *current = this->head;
-            T *newHead = nullptr;
-            T *tail = nullptr;
+            typename DLinkedList<T>::Node *current = this->head;
+            typename DLinkedList<T>::Node *newHead = nullptr;
+            typename DLinkedList<T>::Node *tail = nullptr;
 
             while (current != nullptr)
             {
@@ -70,7 +70,7 @@ public:
         }
     }
 
-    T *split(T *head, int n)
+    typename DLinkedList<T>::Node *split(typename DLinkedList<T>::Node *head, int n)
     {
         for (int i = 1; head != nullptr && i < n; i++)
         {
@@ -80,17 +80,17 @@ public:
         if (head == nullptr)
             return nullptr;
 
-        T *second = head->next;
+        typename DLinkedList<T>::Node *second = head->next;
         if (second != nullptr)
             second->prev = nullptr;
         head->next = nullptr;
         return second;
     }
 
-    void merge(T *left, T *right, int (*comparator)(T &, T &), T *&mergedHead, T *&mergedTail)
+    void merge(typename DLinkedList<T>::Node *left, typename DLinkedList<T>::Node *right, int (*comparator)(T &, T &), typename DLinkedList<T>::Node *&mergedHead, typename DLinkedList<T>::Node *&mergedTail)
     {
-        T dummy;
-        T *current = &dummy;
+        typename DLinkedList<T>::Node dummy;
+        typename DLinkedList<T>::Node *current = &dummy;
 
         while (left != nullptr && right != nullptr)
         {

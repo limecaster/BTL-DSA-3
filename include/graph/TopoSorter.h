@@ -27,7 +27,7 @@ public:
 protected:
     DGraphModel<T> *graph;
     int (*hash_code)(T &, int);
-
+    
     bool dfsVisit(T &vertex, XHashMap<T, bool> &visited, XHashMap<T, bool> &onStack, DLinkedList<T> &result, bool sorted); // Forwards declaration
 
 public:
