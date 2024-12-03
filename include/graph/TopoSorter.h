@@ -34,28 +34,36 @@ protected:
     DLinkedList<T> listOfZeroInDegrees();
 
     // Added dfsVisit method
-    bool dfsVisit(T &vertex, XHashMap<T, bool> &visited, XHashMap<T, bool> &onStack, DLinkedList<T> &result, bool sorted) {
+    bool dfsVisit(T &vertex, XHashMap<T, bool> &visited, XHashMap<T, bool> &onStack, DLinkedList<T> &result, bool sorted)
+    {
         visited.put(vertex, true);
         onStack.put(vertex, true);
 
         DLinkedList<T> neighbors = this->graph->getOutwardEdges(vertex);
 
         // Sort neighbors if required
-        if (sorted) {
+        if (sorted)
+        {
             DLinkedListSE<T> sortedNeighbors(neighbors);
             sortedNeighbors.sort();
             neighbors.clear();
-            for (T neighbor : sortedNeighbors) {
+            for (T neighbor : sortedNeighbors)
+            {
                 neighbors.add(neighbor);
             }
         }
 
-        for (T neighbor : neighbors) {
-            if (!visited.get(neighbor)) {
-                if (!dfsVisit(neighbor, visited, onStack, result, sorted)) {
+        for (T neighbor : neighbors)
+        {
+            if (!visited.get(neighbor))
+            {
+                if (!dfsVisit(neighbor, visited, onStack, result, sorted))
+                {
                     return false;
                 }
-            } else if (onStack.get(neighbor)) {
+            }
+            else if (onStack.get(neighbor))
+            {
                 // Found a cycle
                 return false;
             }
@@ -65,7 +73,6 @@ protected:
         result.add(vertex);
         return true;
     }
-
 
 public:
     TopoSorter(DGraphModel<T> *graph, int (*hash_code)(T &, int) = 0)
@@ -118,17 +125,20 @@ public:
         DLinkedList<T> zeroInDegreeVertices = listOfZeroInDegrees();
 
         // Sort zeroInDegreeVertices if required
-        if (sorted) {
+        if (sorted)
+        {
             DLinkedListSE<T> sortedList(zeroInDegreeVertices);
             sortedList.sort();
             zeroInDegreeVertices.clear();
-            for (T vertex : sortedList) {
+            for (T vertex : sortedList)
+            {
                 zeroInDegreeVertices.add(vertex);
             }
         }
 
         // Start BFS
-        while (!zeroInDegreeVertices.empty()) {
+        while (!zeroInDegreeVertices.empty())
+        {
             // Get the first vertex with zero in-degree
             T u = zeroInDegreeVertices.removeAt(0);
             result.add(u);
@@ -136,29 +146,34 @@ public:
             // For each neighbor v of u
             DLinkedList<T> neighbors = this->graph->getOutwardEdges(u);
 
-            for (T v : neighbors) {
+            for (T v : neighbors)
+            {
                 // Decrease in-degree of v
                 inDegrees[v] -= 1;
 
                 // If in-degree becomes zero, add v to zeroInDegreeVertices
-                if (inDegrees[v] == 0) {
+                if (inDegrees[v] == 0)
+                {
                     zeroInDegreeVertices.add(v);
                 }
             }
 
             // Sort zeroInDegreeVertices if required
-            if (sorted) {
+            if (sorted)
+            {
                 DLinkedListSE<T> sortedList(zeroInDegreeVertices);
                 sortedList.sort();
                 zeroInDegreeVertices.clear();
-                for (T vertex : sortedList) {
+                for (T vertex : sortedList)
+                {
                     zeroInDegreeVertices.add(vertex);
                 }
             }
         }
 
         // Check if topological sorting is possible (graph has no cycles)
-        if (result.size() != this->graph->size()) {
+        if (result.size() != this->graph->size())
+        {
             // Graph has at least one cycle
             return DLinkedList<T>();
         }
@@ -178,25 +193,31 @@ public:
         DLinkedList<T> vertices = this->graph->vertices();
 
         // Sort vertices if required
-        if (sorted) {
+        if (sorted)
+        {
             DLinkedListSE<T> sortedVertices(vertices);
             sortedVertices.sort();
             vertices.clear();
-            for (T vertex : sortedVertices) {
+            for (T vertex : sortedVertices)
+            {
                 vertices.add(vertex);
             }
         }
 
         // Initialize visited and onStack maps
-        for (T vertex : vertices) {
+        for (T vertex : vertices)
+        {
             visited.put(vertex, false);
             onStack.put(vertex, false);
         }
 
         // Perform DFS
-        for (T vertex : vertices) {
-            if (!visited.get(vertex)) {
-                if (!dfsVisit(vertex, visited, onStack, result, sorted)) {
+        for (T vertex : vertices)
+        {
+            if (!visited.get(vertex))
+            {
+                if (!dfsVisit(vertex, visited, onStack, result, sorted))
+                {
                     // Graph has at least one cycle
                     return DLinkedList<T>();
                 }
@@ -206,12 +227,12 @@ public:
         // Reverse the result to get the topological order
         // It doesn't has reverse() method, so we have to create a new list
         DLinkedList<T> reversedResult;
-        for (T vertex : result) {
+        for (T vertex : result)
+        {
             reversedResult.add(0, vertex);
         }
 
         return reversedResult;
-
     }
 }; // TopoSorter
 template <class T>
