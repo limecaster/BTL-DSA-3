@@ -39,18 +39,18 @@ public:
         int n = this->count;
         for (int step = 1; step < n; step *= 2)
         {
-            Node *current = this->head;
-            Node *newHead = nullptr;
-            Node *tail = nullptr;
+            T *current = this->head;
+            T *newHead = nullptr;
+            T *tail = nullptr;
 
             while (current != nullptr)
             {
-                Node *left = current;
-                Node *right = split(left, step);
+                T *left = current;
+                T *right = split(left, step);
                 current = split(right, step);
 
-                Node *mergedHead = nullptr;
-                Node *mergedTail = nullptr;
+                T *mergedHead = nullptr;
+                T *mergedTail = nullptr;
                 merge(left, right, comparator, mergedHead, mergedTail);
 
                 if (newHead == nullptr)
@@ -70,7 +70,7 @@ public:
         }
     }
 
-    Node *split(Node *head, int n)
+    T *split(T *head, int n)
     {
         for (int i = 1; head != nullptr && i < n; i++)
         {
@@ -80,17 +80,17 @@ public:
         if (head == nullptr)
             return nullptr;
 
-        Node *second = head->next;
+        T *second = head->next;
         if (second != nullptr)
             second->prev = nullptr;
         head->next = nullptr;
         return second;
     }
 
-    void merge(Node *left, Node *right, int (*comparator)(T &, T &), Node *&mergedHead, Node *&mergedTail)
+    void merge(T *left, T *right, int (*comparator)(T &, T &), T *&mergedHead, T *&mergedTail)
     {
-        Node dummy;
-        Node *current = &dummy;
+        T dummy;
+        T *current = &dummy;
 
         while (left != nullptr && right != nullptr)
         {
