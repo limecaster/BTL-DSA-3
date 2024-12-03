@@ -9,16 +9,6 @@
 #include "sorting/DLinkedListSE.h"
 using namespace std;
 
-bool strEQ(string &lhs, string &rhs)
-{
-    return lhs.compare(rhs) == 0;
-}
-
-string vertex2str(string &item)
-{
-    return item;
-}
-
 void topoSorterDemo1()
 {
     DGraphModel<string> model(&strEQ, &vertex2str);
@@ -41,18 +31,6 @@ void topoSorterDemo1()
         cout << vertex << " ";
     }
     cout << endl;
-}
-
-bool charEQ(char &lhs, char &rhs)
-{
-    return lhs == rhs;
-}
-
-string char2str(char &item)
-{
-    stringstream os;
-    os << item;
-    return os.str();
 }
 
 void topoSorterDemo2()
