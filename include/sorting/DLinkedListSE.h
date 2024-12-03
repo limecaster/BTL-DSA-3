@@ -45,12 +45,12 @@ public:
 
             while (current != nullptr)
             {
-                T *left = current;
-                T *right = split(left, step);
+                typename DLinkedList<T>::Node *left = current;
+                typename DLinkedList<T>::Node *right = split(left, step);
                 current = split(right, step);
 
-                T *mergedHead = nullptr;
-                T *mergedTail = nullptr;
+                typename DLinkedList<T>::Node *mergedHead = nullptr;
+                typename DLinkedList<T>::Node *mergedTail = nullptr;
                 merge(left, right, comparator, mergedHead, mergedTail);
 
                 if (newHead == nullptr)

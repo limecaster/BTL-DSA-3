@@ -77,15 +77,12 @@ protected:
 public:
     TopoSorter(DGraphModel<T> *graph, int (*hash_code)(T &, int) = 0)
     {
-        // TODO
-
         this->graph = graph;
 
         if (hash_code != 0)
         {
             this->hash_code = hash_code;
         }
-
         else
         {
             // Default hash function
@@ -95,10 +92,9 @@ public:
             };
         }
     }
+
     DLinkedList<T> sort(int mode = 0, bool sorted = true)
     {
-        // TODO
-
         if (mode == DFS)
         {
             return dfsSort(sorted);
@@ -109,13 +105,12 @@ public:
         }
         else
         {
-            throw invalid_argument("Invalid mode");
+            throw std::invalid_argument("Invalid mode");
         }
     }
+
     DLinkedList<T> bfsSort(bool sorted = true)
     {
-        // TODO
-
         DLinkedList<T> result;
 
         // Get in-degree of all vertices
@@ -183,8 +178,6 @@ public:
 
     DLinkedList<T> dfsSort(bool sorted = true)
     {
-        // TODO
-
         DLinkedList<T> result;
         XHashMap<T, bool> visited(this->graph->size(), this->hash_code);
         XHashMap<T, bool> onStack(this->graph->size(), this->hash_code);
@@ -225,7 +218,6 @@ public:
         }
 
         // Reverse the result to get the topological order
-        // It doesn't has reverse() method, so we have to create a new list
         DLinkedList<T> reversedResult;
         for (T vertex : result)
         {
@@ -235,11 +227,11 @@ public:
         return reversedResult;
     }
 }; // TopoSorter
+
 template <class T>
 int TopoSorter<T>::DFS = 0;
+
 template <class T>
 int TopoSorter<T>::BFS = 1;
-
-/////////////////////////////End of TopoSorter//////////////////////////////////
 
 #endif /* TOPOSORTER_H */
