@@ -1,0 +1,8 @@
+mkdir -p obj/ann/layer/
+g++ -std=c++17 -pthread  -Iinclude -Iinclude/ann -Iinclude/tensor -Iinclude/sformat -Idemo -Isrc -c   src/ann/layer/FCLayer.cpp -o obj/ann/layer/FCLayer.o
+
+g++ -std=c++17 -pthread  -Iinclude -Iinclude/ann -Iinclude/tensor -Iinclude/sformat -Idemo -Isrc   obj/ann/config/Config.o  obj/ann/dataset/DSFactory.o  obj/ann/functions.o  obj/ann/layer/FCLayer.o  obj/ann/layer/Layer.o  obj/ann/layer/ReLU.o  obj/ann/layer/Sigmoid.o  obj/ann/layer/Softmax.o  obj/ann/layer/Tanh.o  obj/ann/loss/CrossEntropy.o  obj/ann/loss/LossLayer.o  obj/ann/metrics/ClassMetrics.o  obj/ann/metrics/IMetrics.o  obj/ann/model/IModel.o  obj/ann/model/MLPClassifier.o  obj/ann/optim/Adagrad.o  obj/ann/optim/Adam.o  obj/ann/optim/AdamParamGroup.o  obj/ann/optim/AdaParamGroup.o  obj/ann/optim/Optimizer.o  obj/ann/optim/SGD.o  obj/ann/optim/SGDParamGroup.o  obj/program.o  obj/tensor/xtensor_lib.o -o program -lm -lpthread 
+
+
+mkdir -p obj/
+g++ -std=c++17 -pthread  -Iinclude -Iinclude/ann -Iinclude/tensor -Iinclude/sformat -Idemo -Isrc -c   src/program.cpp -o obj/program.o

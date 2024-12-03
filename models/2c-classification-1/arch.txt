@@ -1,0 +1,7 @@
+model name: 2c-classification
+FC        , FC_25          : 2   , 50  , 1   
+ReLU      , ReLU_26        :
+FC        , FC_27          : 50  , 20  , 1   
+ReLU      , ReLU_28        :
+FC        , FC_29          : 20  , 2   , 1   
+Softmax   , Softmax_30     :   -1
