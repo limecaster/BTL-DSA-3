@@ -26,11 +26,12 @@ void topoSorterDemo1()
     TopoSorter<string> sorter(&model);
     DLinkedList<string> result = sorter.sort(TopoSorter<string>::BFS);
     cout << "Topological sorting (BFS): ";
-    for (string vertex : result)
-    {
-        cout << vertex << " ";
-    }
-    cout << endl;
+    // for (string vertex : result)
+    // {
+    //     cout << vertex << " ";
+    // }
+    // cout << endl;
+    cout << left << setw(15) << result.toString() << endl;
 }
 
 void topoSorterDemo2()
@@ -59,11 +60,12 @@ void topoSorterDemo2()
     TopoSorter<char> sorter(&model);
     DLinkedList<char> result = sorter.sort(TopoSorter<char>::DFS);
     cout << "Topological sorting (DFS): ";
-    for (char vertex : result)
-    {
-        cout << vertex << " ";
-    }
-    cout << endl;
+    // for (char vertex : result)
+    // {
+    //     cout << vertex << " ";
+    // }
+    // cout << endl;
+    cout << left << setw(15) << result.toString() << endl;
 }
 
 void topoSorterDemo3()
@@ -92,11 +94,12 @@ void topoSorterDemo3()
     TopoSorter<char> sorter(&model);
     DLinkedList<char> result = sorter.sort(TopoSorter<char>::BFS, false);
     cout << "Topological sorting (BFS): ";
-    for (char vertex : result)
-    {
-        cout << vertex << " ";
-    }
-    cout << endl;
+    // for (char vertex : result)
+    // {
+    //     cout << vertex << " ";
+    // }
+    // cout << endl;
+    cout << left << setw(15) << result.toString() << endl;
 }
 
 

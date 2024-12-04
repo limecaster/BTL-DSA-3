@@ -85,15 +85,15 @@ int main(int argc, char** argv) {
     //hashDemo3();
 
     //UGraph:
-    ugraphDemo();
+    // ugraphDemo();
 
     //DGraph:
-    DGraphDemo();
+    // DGraphDemo();
 
     //TopoSorter:
     topoSorterDemo1();
-    topoSorterDemo2();
-    topoSorterDemo3();
+    // topoSorterDemo2();
+    // topoSorterDemo3();
 
     return 0;
 }

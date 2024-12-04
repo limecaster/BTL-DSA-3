@@ -16,7 +16,7 @@
 #include "graph/AbstractGraph.h"
 // #include "stacknqueue/Queue.h"
 // #include "stacknqueue/Stack.h"
-// #include "hash/XHashMap.h"
+#include "hash/xMap.h"
 // #include "stacknqueue/PriorityQueue.h"
 // #include "sorting/DLinkedListSE.h"
 

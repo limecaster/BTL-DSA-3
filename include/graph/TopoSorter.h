@@ -29,12 +29,45 @@ protected:
     int (*hash_code)(T &, int);
 
     // Helper functions
-    XHashMap<T, int> vertex2inDegree(int (*hash)(T &, int));
-    XHashMap<T, int> vertex2outDegree(int (*hash)(T &, int));
-    DLinkedList<T> listOfZeroInDegrees();
+    xMap<T, int> vertex2inDegree(int (*hash)(T &, int)){
+        xMap<T, int> map(this->hash_code);
+        typename AbstractGraph<T>::Iterator vertexIt = this->graph->begin();
+        while(vertexIt != this->graph->end()){
+            T vertex = *vertexIt;
+            int inDegree = this->graph->inDegree(vertex);
+            map.put(vertex, inDegree);
+            
+            vertexIt++;
+        }
+        return map;
+    };
+    xMap<T, int> vertex2outDegree(int (*hash)(T &, int)){
+        xMap<T, int> map(this->hash_code);
+        typename AbstractGraph<T>::Iterator vertexIt = this->graph->begin();
+        while(vertexIt != this->graph->end()){
+            T vertex = *vertexIt;
+            int outDegree = this->graph->outDegree(vertex);
+            map.put(vertex, outDegree);
+            
+            vertexIt++;
+        }
+        return map;
+    };
+    DLinkedList<T> listOfZeroInDegrees(){
+        DLinkedList<T> list;
+        typename AbstractGraph<T>::Iterator vertexIt = this->graph->begin();
+        while(vertexIt != this->graph->end()){
+            T vertex = *vertexIt;
+            int inDegree = this->graph->inDegree(vertex);
+            if(inDegree == 0) list.add(vertex);
+            
+            vertexIt++;
+        }
+        return list;
+    };
 
     // Added dfsVisit method
-    bool dfsVisit(T &vertex, XHashMap<T, bool> &visited, XHashMap<T, bool> &onStack, DLinkedList<T> &result, bool sorted)
+    bool dfsVisit(T &vertex, xMap<T, bool> &visited, xMap<T, bool> &onStack, DLinkedList<T> &result, bool sorted)
     {
         visited.put(vertex, true);
         onStack.put(vertex, true);
@@ -111,10 +144,75 @@ public:
 
     DLinkedList<T> bfsSort(bool sorted = true)
     {
+        // DLinkedList<T> result;
+
+        // // Get in-degree of all vertices
+        // xMap<T, int> inDegrees = vertex2inDegree(this->hash_code);
+
+        // // Get list of vertices with in-degree zero
+        // DLinkedList<T> zeroInDegreeVertices = listOfZeroInDegrees();
+
+        // // Sort zeroInDegreeVertices if required
+        // if (sorted)
+        // {
+        //     DLinkedListSE<T> sortedList(zeroInDegreeVertices);
+        //     sortedList.sort();
+        //     zeroInDegreeVertices.clear();
+        //     for (T vertex : sortedList)
+        //     {
+        //         zeroInDegreeVertices.add(vertex);
+        //     }
+        // }
+
+        // // Start BFS
+        // while (!zeroInDegreeVertices.empty())
+        // {
+        //     // Get the first vertex with zero in-degree
+        //     T u = zeroInDegreeVertices.removeAt(0);
+        //     result.add(u);
+
+        //     // For each neighbor v of u
+        //     DLinkedList<T> neighbors = this->graph->getOutwardEdges(u);
+
+        //     for (T v : neighbors)
+        //     {
+        //         // Decrease in-degree of v
+        //         inDegrees[v] -= 1;
+
+        //         // If in-degree becomes zero, add v to zeroInDegreeVertices
+        //         if (inDegrees[v] == 0)
+        //         {
+        //             zeroInDegreeVertices.add(v);
+        //         }
+        //     }
+
+        //     // Sort zeroInDegreeVertices if required
+        //     if (sorted)
+        //     {
+        //         DLinkedListSE<T> sortedList(zeroInDegreeVertices);
+        //         sortedList.sort();
+        //         zeroInDegreeVertices.clear();
+        //         for (T vertex : sortedList)
+        //         {
+        //             zeroInDegreeVertices.add(vertex);
+        //         }
+        //     }
+        // }
+
+        // // Check if topological sorting is possible (graph has no cycles)
+        // if (result.size() != this->graph->size())
+        // {
+        //     // Graph has at least one cycle
+        //     return DLinkedList<T>();
+        // }
+
+        // return result;
+
+
         DLinkedList<T> result;
 
         // Get in-degree of all vertices
-        XHashMap<T, int> inDegrees = vertex2inDegree(this->hash_code);
+        xMap<T, int> inDegrees = vertex2inDegree(this->hash_code);
 
         // Get list of vertices with in-degree zero
         DLinkedList<T> zeroInDegreeVertices = listOfZeroInDegrees();
@@ -144,10 +242,11 @@ public:
             for (T v : neighbors)
             {
                 // Decrease in-degree of v
-                inDegrees[v] -= 1;
+                int currentInDegree = inDegrees.get(v);  // Use get() instead of operator[]
+                inDegrees.put(v, currentInDegree - 1);    // Update the value using put()
 
                 // If in-degree becomes zero, add v to zeroInDegreeVertices
-                if (inDegrees[v] == 0)
+                if (inDegrees.get(v) == 0)
                 {
                     zeroInDegreeVertices.add(v);
                 }
@@ -179,8 +278,8 @@ public:
     DLinkedList<T> dfsSort(bool sorted = true)
     {
         DLinkedList<T> result;
-        XHashMap<T, bool> visited(this->graph->size(), this->hash_code);
-        XHashMap<T, bool> onStack(this->graph->size(), this->hash_code);
+        xMap<T, bool> visited (this->hash_code);
+        xMap<T, bool> onStack (this->hash_code);
 
         // Get all vertices
         DLinkedList<T> vertices = this->graph->vertices();
