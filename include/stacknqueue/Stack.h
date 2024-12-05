@@ -82,7 +82,7 @@ public:
         // TODO: remove the first occurrence of the item
         //      return true if the item is removed successfully
 
-        return list.removeItem(item, deleteUserData);
+        return list.removeItem(item);
     }
     bool contains(T item)
     {

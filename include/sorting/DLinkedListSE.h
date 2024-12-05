@@ -33,103 +33,82 @@ public:
 
     void sort(int (*comparator)(T &, T &) = 0)
     {
-        if (this->count <= 1)
-            return;
+        if (this->count <= 1) return;
 
-        int n = this->count;
-        for (int step = 1; step < n; step *= 2)
-        {
-            typename DLinkedList<T>::Node *current = this->head;
-            typename DLinkedList<T>::Node *newHead = nullptr;
-            typename DLinkedList<T>::Node *tail = nullptr;
+        // Perform merge sort on the list
+        this->head->next = mergeSort(this->head->next, comparator);
 
-            while (current != nullptr)
-            {
-                typename DLinkedList<T>::Node *left = current;
-                typename DLinkedList<T>::Node *right = split(left, step);
-                current = split(right, step);
-
-                typename DLinkedList<T>::Node *mergedHead = nullptr;
-                typename DLinkedList<T>::Node *mergedTail = nullptr;
-                merge(left, right, comparator, mergedHead, mergedTail);
-
-                if (newHead == nullptr)
-                {
-                    newHead = mergedHead;
-                }
-                else
-                {
-                    tail->next = mergedHead;
-                    mergedHead->prev = tail;
-                }
-                tail = mergedTail;
-            }
-
-            this->head = newHead;
-            this->tail = tail;
+        // Update tail pointer
+        typename DLinkedList<T>::Node* temp = this->head;
+        while (temp->next != this->tail) {
+            temp = temp->next;
         }
+        temp->next = this->tail;
+        this->tail->prev = temp;
     }
 
-    typename DLinkedList<T>::Node *split(typename DLinkedList<T>::Node *head, int n)
-    {
-        for (int i = 1; head != nullptr && i < n; i++)
-        {
-            head = head->next;
+    private:
+    typename DLinkedList<T>::Node* mergeSort(typename DLinkedList<T>::Node* start, int (*comparator)(T&, T&) = 0) {
+        if (start == this->tail || start->next == this->tail) {
+            return start;
         }
 
-        if (head == nullptr)
-            return nullptr;
+        // Split the list into halves
+        typename DLinkedList<T>::Node* middle = getMiddle(start);
+        typename DLinkedList<T>::Node* nextOfMiddle = middle->next;
 
-        typename DLinkedList<T>::Node *second = head->next;
-        if (second != nullptr)
-            second->prev = nullptr;
-        head->next = nullptr;
-        return second;
+        // Disconnect the left half from the right half
+        middle->next = this->tail;
+        this->tail->prev = middle;
+
+        // Recursively sort the sublists
+        typename DLinkedList<T>::Node* left = mergeSort(start, comparator);
+        typename DLinkedList<T>::Node* right = mergeSort(nextOfMiddle, comparator);
+
+        // Merge the sorted sublists
+        return merge(left, right, comparator);
     }
 
-    void merge(typename DLinkedList<T>::Node *left, typename DLinkedList<T>::Node *right, int (*comparator)(T &, T &), typename DLinkedList<T>::Node *&mergedHead, typename DLinkedList<T>::Node *&mergedTail)
-    {
+    typename DLinkedList<T>::Node* getMiddle(typename DLinkedList<T>::Node* start) {
+        if (start == this->tail) return start;
+
+        typename DLinkedList<T>::Node* slow = start;
+        typename DLinkedList<T>::Node* fast = start->next;
+
+        while (fast != this->tail && fast->next != this->tail) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
+    }
+
+    typename DLinkedList<T>::Node* merge(typename DLinkedList<T>::Node* left, typename DLinkedList<T>::Node* right, int (*comparator)(T&, T&) = 0) {
         typename DLinkedList<T>::Node dummy;
-        typename DLinkedList<T>::Node *current = &dummy;
+        typename DLinkedList<T>::Node* tail = &dummy;
 
-        while (left != nullptr && right != nullptr)
-        {
-            if (compare(left->data, right->data, comparator) <= 0)
-            {
-                current->next = left;
-                left->prev = current;
+        while (left != this->tail && right != this->tail) {
+            if (compare(left->data, right->data, comparator) <= 0) {
+                tail->next = left;
+                left->prev = tail;
                 left = left->next;
-            }
-            else
-            {
-                current->next = right;
-                right->prev = current;
+            } else {
+                tail->next = right;
+                right->prev = tail;
                 right = right->next;
             }
-            current = current->next;
+            tail = tail->next;
         }
 
-        if (left != nullptr)
-        {
-            current->next = left;
-            left->prev = current;
-        }
-        else if (right != nullptr)
-        {
-            current->next = right;
-            right->prev = current;
+        tail->next = (left != this->tail) ? left : right;
+        if (tail->next != this->tail) {
+            tail->next->prev = tail;
+        } else {
+            this->tail->prev = tail;
         }
 
-        while (current->next != nullptr)
-        {
-            current = current->next;
-        }
-
-        mergedHead = dummy.next;
-        mergedHead->prev = nullptr;
-        mergedTail = current;
+        return dummy.next;
     }
-
+    
 protected:
     static int compare(T &lhs, T &rhs, int (*comparator)(T &, T &) = 0)
     {

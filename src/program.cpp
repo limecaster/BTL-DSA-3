@@ -26,6 +26,7 @@ namespace fs = std::filesystem;
 #include "graph/DGraphDemo.h"
 #include "graph/UGraphDemo.h"
 #include "graph/TopoSorterDemo.h"
+#include "sorting/DLinkedlistSEDemo.h"
 
 int main(int argc, char** argv) {
 
@@ -90,10 +91,11 @@ int main(int argc, char** argv) {
     //DGraph:
     // DGraphDemo();
 
+    // DLinkedlist sort:
+    dllSortDemo();
+
     //TopoSorter:
-    topoSorterDemo1();
-    // topoSorterDemo2();
-    // topoSorterDemo3();
+    topoSorterDemo();
 
     return 0;
 }

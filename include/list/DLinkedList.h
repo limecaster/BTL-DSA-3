@@ -562,6 +562,9 @@ void DLinkedList<T>::copyFrom(const DLinkedList<T> &list)
      */
 
     Node *current = list.head->next;
+    for(int i = 0; i < this->count; i++){
+        cout << "Data: " << this->get(i) << endl;
+    }
     for (int i = 0; i < list.count; i++)
     {
         add(current->data);
@@ -593,6 +596,7 @@ void DLinkedList<T>::removeInternalData()
         delete current;
         current = next;
     }
+
 }
 
 #endif /* DLINKEDLIST_H */
