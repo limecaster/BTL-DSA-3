@@ -86,10 +86,10 @@ int main(int argc, char** argv) {
     //hashDemo3();
 
     //UGraph:
-    // ugraphDemo();
+    ugraphDemo();
 
     //DGraph:
-    // DGraphDemo();
+    DGraphDemo();
 
     // DLinkedlist sort:
     dllSortDemo();
