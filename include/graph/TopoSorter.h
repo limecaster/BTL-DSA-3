@@ -181,7 +181,7 @@ public:
             zeroInDegrees.sort();
         }
 
-        for (typename DLinkedList<T>::Iterator it = zeroInDegrees.begin(); it != zeroInDegrees.end(); ++it)
+        for (typename DLinkedListSE<T>::Iterator it = zeroInDegrees.begin(); it != zeroInDegrees.end(); ++it)
         {
             T vertex = *it;
             queue.push(vertex);
@@ -199,7 +199,7 @@ public:
                 neighbors.sort();
             }
             
-            for (typename DLinkedList<T>::Iterator it = neighbors.begin(); it != neighbors.end(); ++it)
+            for (typename DLinkedListSE<T>::Iterator it = neighbors.begin(); it != neighbors.end(); ++it)
             {
                 T neighbor = *it;
                 if (queue.contains(neighbor))
