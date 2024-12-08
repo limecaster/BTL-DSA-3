@@ -20,6 +20,9 @@
 #include "stacknqueue/Queue.h"
 #include "hash/xMap.h"
 
+template <class T, class U>
+using XHashMap = xMap<T, U>;
+
 template <class T>
 class TopoSorter
 {
@@ -32,9 +35,9 @@ protected:
     int (*hash_code)(T &, int);
 
     // Helper functions
-    xMap<T, int> vertex2inDegree(int (*hash)(T &, int))
+    XHashMap<T, int> vertex2inDegree(int (*hash)(T &, int))
     {
-        xMap<T, int> map(this->hash_code);
+        XHashMap<T, int> map(this->hash_code);
         typename AbstractGraph<T>::Iterator vertexIt = this->graph->begin();
         while (vertexIt != this->graph->end())
         {
@@ -46,9 +49,9 @@ protected:
         }
         return map;
     };
-    xMap<T, int> vertex2outDegree(int (*hash)(T &, int))
+    XHashMap<T, int> vertex2outDegree(int (*hash)(T &, int))
     {
-        xMap<T, int> map(this->hash_code);
+        XHashMap<T, int> map(this->hash_code);
         typename AbstractGraph<T>::Iterator vertexIt = this->graph->begin();
         while (vertexIt != this->graph->end())
         {
