@@ -35,9 +35,9 @@ protected:
     int (*hash_code)(T &, int);
 
     // Helper functions
-    XHashMap<T, int> vertex2inDegree(int (*hash)(T &, int))
+    xMap<T, int> vertex2inDegree(int (*hash)(T &, int))
     {
-        XHashMap<T, int> map(this->hash_code);
+        xMap<T, int> map(this->hash_code);
         typename AbstractGraph<T>::Iterator vertexIt = this->graph->begin();
         while (vertexIt != this->graph->end())
         {
@@ -49,9 +49,9 @@ protected:
         }
         return map;
     };
-    XHashMap<T, int> vertex2outDegree(int (*hash)(T &, int))
+    xMap<T, int> vertex2outDegree(int (*hash)(T &, int))
     {
-        XHashMap<T, int> map(this->hash_code);
+        xMap<T, int> map(this->hash_code);
         typename AbstractGraph<T>::Iterator vertexIt = this->graph->begin();
         while (vertexIt != this->graph->end())
         {
@@ -120,7 +120,7 @@ public:
         xMap<T, int> outDegrees = vertex2outDegree(this->hash_code);
         DLinkedListSE<T> zeroOutDegrees = listOfZeroInDegrees();
         Stack<T> stack;
-
+        
         if (sorted)
         {
             zeroOutDegrees.sort();
@@ -196,7 +196,6 @@ public:
             result.add(vertex);
 
             DLinkedListSE<T> neighbors = this->graph->getOutwardEdges(vertex);
-            
             if (sorted && neighbors.size() > 1)
             {
                 neighbors.sort();
@@ -223,7 +222,7 @@ public:
                 }
             }
         }
-
+        
         return result;
     }
 }; // TopoSorter

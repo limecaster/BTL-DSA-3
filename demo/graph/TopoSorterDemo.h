@@ -171,7 +171,7 @@ void topoSorterDemo4()
         cout << vertex << " ";
     }
     cout << endl;
-    result.clear();
+    //result.clear();
     result = sorter.sort(TopoSorter<int>::BFS);
     cout << "Topological sorting (BFS): ";
     for (int vertex : result)
@@ -206,7 +206,7 @@ void topoSorterDemo5()
         cout << vertex << " ";
     }
     cout << endl;
-    result.clear();
+    //result.clear();
     result = sorter.sort(TopoSorter<int>::BFS);
     cout << "Topological sorting (BFS): ";
     cout << endl;
@@ -255,7 +255,7 @@ void topoSorterDemo6()
         cout << vertex << " ";
     }
     cout << endl;
-    result.clear();
+    //result.clear();
     result = sorter.sort(TopoSorter<int>::BFS, false);
     cout << "Topological sorting (BFS): ";
     for (int vertex : result)

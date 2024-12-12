@@ -48,7 +48,7 @@ public:
         // TODO: remove and return the top item
 
         if (list.empty())
-            throw Underflow("Stack is empty");
+            throw Underflow("Stack");
         return list.removeAt(list.size() - 1);
     }
     T &peek()
@@ -56,7 +56,7 @@ public:
         // TODO: return the top item
 
         if (list.empty())
-            throw Underflow("Stack is empty");
+            throw Underflow("Stack");
         return list.get(list.size() - 1);
     }
     bool empty()

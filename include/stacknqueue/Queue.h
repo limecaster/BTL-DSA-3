@@ -47,7 +47,7 @@ public:
         // TODO: remove and return the front item
 
         if (list.empty())
-            throw Underflow("Queue is empty");
+            throw Underflow("Queue");
         return list.removeAt(0);
     }
     T &peek()
@@ -55,7 +55,7 @@ public:
         // TODO: return the front item
 
         if (list.empty())
-            throw Underflow("Queue is empty");
+            throw Underflow("Queue");
         return list.get(0);
     }
     bool empty()

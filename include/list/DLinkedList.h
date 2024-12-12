@@ -562,6 +562,7 @@ void DLinkedList<T>::copyFrom(const DLinkedList<T> &list)
      */
 
     Node *current = list.head->next;
+    this->count = 0;
     for (int i = 0; i < list.count; i++)
     {
         add(current->data);
